@@ -4,7 +4,7 @@
 MongoDB sysbench-mongo benchmark
 ==================
 
-This benchmarks was done in Jun 2015.
+Benchmark date: Jun 2015.
 
 The goal was to evaluate different available storage engines for MongoDB.
 The workload is `sysbench-mongodb <https://github.com/tmcallaghan/sysbench-mongodb>`_.
@@ -61,8 +61,24 @@ size   mmap wiredTiger
 32/48  35   67
 =====  ==== ==========
 
+RocksDB vs WiredTiger
+==================
 
+MongoDB RocksDB startup command line
 
+	``$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=rocksdb --rocksdbCacheSizeGB=X``
+
+Most runs for RocksDB was 60 min, plus one extra run for 180 min.
+
+.. image:: img/wt-rocksdb.png
+
+=====  ==== ========== ========
+size   mmap wiredTiger RocksDB
+=====  ==== ========== ========
+8/16   26   53         81
+16/32  31   61         91
+32/48  35   67         104 
+=====  ==== ========== ========
 
 
 
