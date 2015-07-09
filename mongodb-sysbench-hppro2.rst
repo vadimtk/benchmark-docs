@@ -140,5 +140,22 @@ And there is a final matrix with all results:
 
 .. image:: img/matrix.png
 
+IO Resources consumption
+========================
+
+Beside the plain throughput, it is interesting to compare how much IO resources different engines consume.
+As all engines show different throughput, I normalize IO reads and writes per operation. The result is on the next chart. The chart show Reads in KiB per operation (above 0) and Writes in KiB per operation (shown below 0).
+
+.. image:: img/io-per-op.png
+
+It is naturally to expect that reads per operation should go down with bigger cachesize, and most engines perform this way (beside TokuMX and TokuMXse).
+In writes area RocksDB is absolute winner, it is almost magical how little writes per operation it performs.
+
+
+
+
+
+
+
 
 
