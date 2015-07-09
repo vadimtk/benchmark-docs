@@ -10,7 +10,7 @@ The goal was to evaluate different available storage engines for MongoDB.
 The workload is `sysbench-mongodb <https://github.com/tmcallaghan/sysbench-mongodb>`_.
 The load is designed to be a heavy IO-load, and I use a slow storage.
 
-THe benchmarks was done on the server  :ref:`hppro2-server` with RAID10 over 6 SAS hard drives as a storage
+The benchmark was done on the server  :ref:`hppro2-server` with RAID10 over 6 SAS hard drives as a storage
 
 Workload description
 ====================
