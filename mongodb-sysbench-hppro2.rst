@@ -68,7 +68,7 @@ WiredTiger checkpoint period
 
 On previous chart we see a lot of variance in wiredTiger results. My guess was it is related to checkpointing activity,
 which by default happens every 60. It took some research to find a way to change a checkpoint period for wiredTiger,
-apparenly the variable ``--syncdelay`` is responsible for that.
+apparently the variable ``--syncdelay`` is responsible for that.
 So there is results with longer (900sec) checkpoint interval for wiredTiger
 
 .. image:: img/wt-ckp900.png
@@ -83,8 +83,8 @@ size   mmap wiredTiger wiredTiger (checkpoint 900sec)
 32/48  35   67         72
 =====  ==== ========== ==============================
 
-So we can make a conclusion that increasing checkpoint interval makes some improvement in the variance, and the overall result is better (though dips in thoughput is worse during checkpoint activity).
-I will use the last result (wich checkpoint period 900) in the following tables.
+So we can make a conclusion that increasing checkpoint interval makes some improvement in the variance, and the overall result is better (though dips in throughput is worse during checkpoint activity).
+I will use the last result (with checkpoint period 900) in the following tables.
 
 RocksDB vs WiredTiger
 =====================
