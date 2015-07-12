@@ -92,7 +92,7 @@ I will use the last result (with checkpoint period 900) in the following tables.
 RocksDB vs WiredTiger
 =====================
 
-MongoDB RocksDB startup command line
+MongoDB RocksDB [#f1]_ startup command line
 
 .. code::
 
@@ -116,7 +116,7 @@ size   mmap wiredTiger RocksDB
 TokuMX vs WiredTiger
 ====================
 
-I use Percona TokuMX 2.0.1 in this test.
+I use Percona TokuMX 2.0.1 [#f2]_ in this test.
 
 Percona TokuMX startup command line
 
@@ -148,7 +148,7 @@ size   mmap wiredTiger RocksDB  TokuMX
 TokuMXse vs TokuMX
 ====================
 
-In the last comparison I test TokuMXse RC6 (storage engine based on TokuFT for MongoDB 3.0)
+In the last comparison I test TokuMXse RC6 [#f3]_ (storage engine based on TokuFT for MongoDB 3.0)
 
 TokuMXse command line
 
@@ -192,7 +192,13 @@ In writes area RocksDB is absolute winner, it is almost magical how little write
 
 
 
+.. rubric:: Footnotes
 
+.. [#f1] Link to download `MongoDB with RocksDB <http://percona-lab-mongorocks.s3.amazonaws.com/mongo-rocks-3.0.4-pre-STATIC.tar.gz>`_ .
+
+.. [#f2] `Percona TokuMX 2.0.1 <http://www.tokutek.com/tokumx-for-mongodb/download-community/>`_
+
+.. [#f3] `Percona TokuMXse RC6 <https://www.percona.com/downloads/TESTING/percona-tokumxse/percona-tokumxse-3.0.3-1.0-rc.6/>`_
 
 
 
