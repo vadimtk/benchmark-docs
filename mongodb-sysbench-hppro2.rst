@@ -40,11 +40,13 @@ MMAP vs WiredTiger
 
 MongoDB MMAP startup command line
 
-	``$MONGODIR/mongod --dbpath=$DATADIR --logpath=$1/server.log``
+.. code-block:: bash
+
+	$MONGODIR/mongod --dbpath=$DATADIR --logpath=$1/server.log
 
 MongoDB wiredTiger startup command line
 
-.. code::
+.. code-block:: bash
 
 	$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=wiredTiger \
 	--wiredTigerCacheSizeGB=X --wiredTigerJournalCompressor=none 
@@ -55,6 +57,8 @@ Results:
 The graphical results to see the pattern (throughput is shown, in operations per second, more is better)
 
 .. image:: img/wt-mmap.png
+	:width: 800px
+	:height: 600px
 
 Or average results (throughput, operations per second) during 2nd hour:
 
@@ -75,6 +79,8 @@ apparently the variable ``--syncdelay`` is responsible for that.
 So there is results with longer (900sec) checkpoint interval for wiredTiger
 
 .. image:: img/wt-ckp900.png
+	:width: 800px
+	:height: 600px
 
 Or average results (throughput, operations per second) during 2nd hour:
 
@@ -94,7 +100,7 @@ RocksDB vs WiredTiger
 
 MongoDB RocksDB [#f1]_ startup command line
 
-.. code::
+.. code-block:: bash
 
 	$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=rocksdb \
 	--rocksdbCacheSizeGB=X
@@ -102,6 +108,8 @@ MongoDB RocksDB [#f1]_ startup command line
 Most runs for RocksDB was 60 min, plus one extra run for 180 min.
 
 .. image:: img/wt-rocksdb.png
+	:width: 800px
+	:height: 600px
 
 Or average results (throughput, operations per second) during 2nd hour:
 
@@ -120,19 +128,23 @@ I use Percona TokuMX 2.0.1 [#f2]_ in this test.
 
 Percona TokuMX startup command line
 
-.. code::
+.. code-block:: bash
 
 	$MONGODIR/mongod --dbpath=$DATADIR --setParameter="defaultCompression=quicklz" \
 	--setParameter="defaultFanout=128" --setParameter="defaultReadPageSize=16384" \
 	--setParameter="fastUpdates=true" --cacheSize=X --checkpointPeriod=900
 
 .. image:: img/wt-tokumx.png
+	:width: 800px
+	:height: 600px
 
 There we can see that TokuMX outperforms wiredTiger, but worth to note there is periodical drops in the throughput (every 900 sec, which corresponds to checkpointPeriod). What is problematic is that TokuMX throughput does not grow with cacheSize increase, which is the case for other engines. So it seems TokuMX does not benefit from extra available memory.
 
 There is a chart only for TokuMX with cachesize comparison
 
-.. figure:: img/tokumx-cache.png
+.. image:: img/tokumx-cache.png
+	:width: 800px
+	:height: 600px
 
 
 Or average results (throughput, operations per second):
@@ -161,6 +173,8 @@ TokuMXse command line
 	--tokuftEngineCacheSize=X --syncdelay=900
 	
 .. image:: img/tokumxse.png
+	:width: 800px
+	:height: 600px
 
 We see there is a significant regression in the current TokuMXse RC6, the reason is that MongoDB 3.0 API does not allow us to utilize all TokuFT features, and we still need to find a workaround.
 
@@ -178,6 +192,9 @@ size   mmap wiredTiger RocksDB  TokuMX    TokuMXse
 And there is a final matrix with all results:
 
 .. image:: img/matrix.png
+	:width: 800px
+	:height: 600px
+
 
 IO Resources consumption
 ========================
