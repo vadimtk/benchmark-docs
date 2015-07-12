@@ -44,7 +44,10 @@ MongoDB MMAP startup command line
 
 MongoDB wiredTiger startup command line
 
-	``$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=wiredTiger --wiredTigerCacheSizeGB=X --wiredTigerJournalCompressor=none --logpath=$1/server.log``
+.. code::
+
+	$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=wiredTiger \
+	--wiredTigerCacheSizeGB=X --wiredTigerJournalCompressor=none 
 
 Results:
 --------
@@ -91,7 +94,10 @@ RocksDB vs WiredTiger
 
 MongoDB RocksDB startup command line
 
-	``$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=rocksdb --rocksdbCacheSizeGB=X``
+.. code::
+
+	$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=rocksdb \
+	--rocksdbCacheSizeGB=X
 
 Most runs for RocksDB was 60 min, plus one extra run for 180 min.
 
@@ -114,7 +120,11 @@ I use Percona TokuMX 2.0.1 in this test.
 
 Percona TokuMX startup command line
 
-	``$MONGODIR/mongod --dbpath=$DATADIR --setParameter="defaultCompression=quicklz" --setParameter="defaultFanout=128" --setParameter="defaultReadPageSize=16384" --setParameter="fastUpdates=true" --cacheSize=X --checkpointPeriod=900``
+.. code::
+
+	$MONGODIR/mongod --dbpath=$DATADIR --setParameter="defaultCompression=quicklz" \
+	--setParameter="defaultFanout=128" --setParameter="defaultReadPageSize=16384" \
+	--setParameter="fastUpdates=true" --cacheSize=X --checkpointPeriod=900
 
 .. image:: img/wt-tokumx.png
 
@@ -122,7 +132,7 @@ There we can see that TokuMX outperforms wiredTiger, but worth to note there is 
 
 There is a chart only for TokuMX with cachesize comparison
 
-.. image:: img/tokumx-cache.png
+.. figure:: img/tokumx-cache.png
 
 
 Or average results (throughput, operations per second):
@@ -141,8 +151,14 @@ TokuMXse vs TokuMX
 In the last comparison I test TokuMXse RC6 (storage engine based on TokuFT for MongoDB 3.0)
 
 TokuMXse command line
-	
-	``$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=tokuft --tokuftCollectionReadPageSize=16384 --tokuftCollectionCompression=quicklz --tokuftCollectionFanout=128 --tokuftIndexReadPageSize=16384 --tokuftIndexCompression=quicklz --tokuftIndexFanout=128 --tokuftEngineCacheSize=X --syncdelay=900``	
+
+.. code-block:: bash
+
+	$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=tokuft \
+	--tokuftCollectionReadPageSize=16384 --tokuftCollectionCompression=quicklz \
+	--tokuftCollectionFanout=128 --tokuftIndexReadPageSize=16384 \
+	--tokuftIndexCompression=quicklz --tokuftIndexFanout=128 \
+	--tokuftEngineCacheSize=X --syncdelay=900
 	
 .. image:: img/tokumxse.png
 
