@@ -63,6 +63,29 @@ size   mmap wiredTiger
 32/48  35   67
 =====  ==== ==========
 
+WiredTiger checkpoint period
+============================
+
+On previous chart we see a lot of variance in wiredTiger results. My guess was it is related to checkpointing activity,
+which by default happens every 60. It took some research to find a way to change a checkpoint period for wiredTiger,
+apparenly the variable ``--syncdelay`` is responsible for that.
+So there is results with longer (900sec) checkpoint interval for wiredTiger
+
+.. image:: img/wt-ckp900.png
+
+Or average results (throughput, operations per second) during 2nd hour:
+
+=====  ==== ========== ==============================
+size   mmap wiredTiger wiredTiger (checkpoint 900sec)
+=====  ==== ========== ==============================
+8/16   26   53         58
+16/32  31   61         67
+32/48  35   67         72
+=====  ==== ========== ==============================
+
+So we can make a conclusion that increasing checkpoint interval makes some improvement in the variance, and the overall result is better (though dips in thoughput is worse during checkpoint activity).
+I will use the last result (wich checkpoint period 900) in the following tables.
+
 RocksDB vs WiredTiger
 =====================
 
@@ -79,9 +102,9 @@ Or average results (throughput, operations per second) during 2nd hour:
 =====  ==== ========== ========
 size   mmap wiredTiger RocksDB
 =====  ==== ========== ========
-8/16   26   53         81
-16/32  31   61         91
-32/48  35   67         104 
+8/16   26   58         81
+16/32  31   67         91
+32/48  35   72         104 
 =====  ==== ========== ========
 
 TokuMX vs WiredTiger
@@ -107,9 +130,9 @@ Or average results (throughput, operations per second):
 =====  ==== ========== ======== =========
 size   mmap wiredTiger RocksDB  TokuMX
 =====  ==== ========== ======== =========
-8/16   26   53         81       106
-16/32  31   61         91       107
-32/48  35   67         104      102
+8/16   26   58         81       107
+16/32  31   67         91       107
+32/48  35   72         104      102
 =====  ==== ========== ======== =========
 
 TokuMXse vs TokuMX
@@ -119,7 +142,7 @@ In the last comparison I test TokuMXse RC6 (storage engine based on TokuFT for M
 
 TokuMXse command line
 	
-	``$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=tokuft --tokuftCollectionReadPageSize=16384 --tokuftCollectionCompression=quicklz --tokuftCollectionFanout=128 --tokuftIndexReadPageSize=16384 --tokuftIndexCompression=quicklz --tokuftIndexFanout=128 --tokuftEngineCacheSize=X``	
+	``$MONGODIR/mongod --dbpath=$DATADIR --storageEngine=tokuft --tokuftCollectionReadPageSize=16384 --tokuftCollectionCompression=quicklz --tokuftCollectionFanout=128 --tokuftIndexReadPageSize=16384 --tokuftIndexCompression=quicklz --tokuftIndexFanout=128 --tokuftEngineCacheSize=X --syncdelay=900``	
 	
 .. image:: img/tokumxse.png
 
@@ -130,9 +153,9 @@ Or average results (throughput, operations per second):
 =====  ==== ========== ======== ========= ========
 size   mmap wiredTiger RocksDB  TokuMX    TokuMXse
 =====  ==== ========== ======== ========= ========
-8/16   26   53         81       106       57
-16/32  31   61         91       107       76
-32/48  35   67         104      102       63
+8/16   26   58         81       107       89
+16/32  31   67         91       107       100
+32/48  35   72         104      102       84
 =====  ==== ========== ======== ========= ========
 
 
@@ -150,8 +173,6 @@ As all engines show different throughput, I normalize IO reads and writes per op
 
 It is naturally to expect that reads per operation should go down with bigger cachesize, and most engines perform this way (beside TokuMX and TokuMXse).
 In writes area RocksDB is absolute winner, it is almost magical how little writes per operation it performs.
-
-
 
 
 
