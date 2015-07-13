@@ -209,6 +209,13 @@ As all engines show different throughput, I normalize IO reads and writes per op
 It is naturally to expect that reads per operation should go down with bigger cachesize, and most engines perform this way (beside TokuMX and TokuMXse).
 In writes area RocksDB is absolute winner, it is almost magical how little writes per operation it performs.
 
+Final words
+===========
+At the end I would like to highlight that this benchmark was designed to emulate a heavy IO load on (relatively) slow IO subsystem.
+This use case, I believe, is totally valid and represent frequently used "cloud" setups, with limited memory and slow IO.
+WiredTiger engine, as B-Tree based, is expected to perform worse comparing to RocksDB and Toku Fractal Trees, which, are designed to handle IO-intensive workloads. My assumption is that wiredTiger will perform better (or even outperform others) for CPU intensive in-memory workloads(see for example  `Mark Callaghan's results <http://smalldatum.blogspot.com/2015/07/linkbench-for-mysql-mongodb-with-cached.html>`_). Also WiredTiger is expected to perform better on a faster storage.
+
+
 Raw results and scripts
 =======================
 
