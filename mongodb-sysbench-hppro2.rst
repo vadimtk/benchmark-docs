@@ -25,9 +25,9 @@ I use small cache sizes and limit total available memory available for mongod pr
 
 So I use following cache/total memory configurations:
 
-* 8GB cache / 16GB total
-* 16GB cache / 32GB total
-* 32GB cache / 48GB total
+* 8GiB cache / 16GiB total
+* 16GiB cache / 32GiB total
+* 32GiB cache / 48GiB total
 
 For MMAP engine there is no cache configuration, so only total memory limit is applied.
 
@@ -203,10 +203,16 @@ Beside the plain throughput, it is interesting to compare how much IO resources 
 As all engines show different throughput, I normalize IO reads and writes per operation. The result is on the next chart. The chart show Reads in KiB per operation (above 0) and Writes in KiB per operation (shown below 0).
 
 .. image:: img/io-per-op.png
+	:width: 800px
+	:height: 600px
 
 It is naturally to expect that reads per operation should go down with bigger cachesize, and most engines perform this way (beside TokuMX and TokuMXse).
 In writes area RocksDB is absolute winner, it is almost magical how little writes per operation it performs.
 
+Raw results and scripts
+=======================
+
+The raw results and scripts `are available here <https://github.com/Percona-Lab/benchmark-results/tree/mongo-sysbench-hdpro2-hdd-jun2015>`_
 
 
 .. rubric:: Footnotes
