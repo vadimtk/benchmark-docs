@@ -12,7 +12,7 @@ The load is designed to be heavy IO-load.
 
 I compared InnoDB without compression, InnoDB with 8k compression, TokuDB with quicklz compression.
 
-The benchmark was done on the server  :ref:`sm-perf01-server` with storage options:
+The benchmark was done on the server  :ref:`sm-perf01` with storage options:
 
 * Intel P3600 PCIe SSD 1.6TB (marked as "i3600" on charts)
 * Crucial M500 SATA SSD 900GB (marked as "M500" on charts)
@@ -139,21 +139,70 @@ Though, it worth to remember, that:
 Also looking on results, I can make a conclusion that InnoDB compression is inefficient in its implementation,
 as it is not able to get befits: first, from doing less reads (well, it helps to get better than uncompressed InnoDB, but not much); and, second, from a fast storage.
 
-
-Add-ons
-===========
+Appendix
+========
 
 InnoDB config
 -------------
 
+.. code-block:: bash
+
+	innodb-flush-method            = O_DIRECT
+	innodb-log-files-in-group      = 2
+	innodb-log-file-size           = 16G
+	innodb-flush-log-at-trx-commit = 1
+	innodb_log_compressed_pages     =0
+	innodb_log_checksum_algorithm  = crc32
+
+	innodb-file-per-table          = 1
+	innodb-buffer-pool-size        = 12G
+
+	innodb_write_io_threads        = 8
+	innodb_read_io_threads         = 32
+	innodb_open_files              = 1024
+
+	innodb_old_blocks_pct           =10
+	innodb_old_blocks_time          =2000
+
+	innodb_checksum_algorithm 		= crc32
+
+	innodb_file_format              =Barracuda
+
+	innodb_io_capacity 				=2000
+	innodb_io_capacity_max			=5000
+	metadata_locks_hash_instances	=256
+	innodb_max_dirty_pages_pct		=90
+	innodb_flush_neighbors			=0
+	innodb_buffer_pool_instances	=16
+	innodb_lru_scan_depth			=4096
+	innodb_sync_spin_loops			=30
+	innodb-purge-threads			=16
+
+
 TokuDB config
 -------------
+
+.. code-block:: bash
+
+	tokudb_cache_size		=8G
+	tokudb_directio			=OFF
+	tokudb_empty_scan		=disabled
+	tokudb_read_block_size	=16K
+	tokudb_commit_sync		=ON
+	tokudb_checkpointing_period=900
+	tokudb_block_size 		=4M
+	tokudb_cleaner_iterations=10000
+	tokudb_fanout			=128
 
 LinkBenchX parameters
 ---------------------
 
+	``bin/linkbench -r -c config/LinkConfigMysql.properties -D requesters=48 -D requestrate=45000 -D dbid=$DB -D maxtime=86400``
+
 Raw results and scripts
 =======================
+
+The raw results and scripts `are available here <https://github.com/Percona-Lab/benchmark-results/tree/linkbench-mysql-sm-perf01-jul2015>`_
 
 
 .. rubric:: Footnotes
