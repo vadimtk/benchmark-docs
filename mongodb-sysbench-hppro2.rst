@@ -195,6 +195,18 @@ And there is a final matrix with all results:
 	:width: 800px
 	:height: 600px
 
+Results on a fast storage (pure flash)
+======================================
+
+(updated on 07/15/2015 with the results on pure flash, Micron RealSSD P320h)
+
+There is a matrix with results on a fast storage, PCIe Flash, Micron RealSSD P320h. All other conditions as descibed above.
+
+.. image:: img/matrix-micron.png
+	:width: 800px
+	:height: 600px
+
+
 
 IO Resources consumption
 ========================
