@@ -6,6 +6,7 @@
 Benchmarks documents
 ======================================
 * :ref:`mongodb-sysbench-hppro2`
+* :ref:`linkbench-mysql-sm-perf01-jul2015`
 
 Servers
 ==================
